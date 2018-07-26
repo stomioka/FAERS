@@ -3,6 +3,7 @@
 ## Introduction
 
 This document describes the web application [FDA Adverse Event Reporting System Data Reviewer](https://stomioka.shinyapps.io/FAERS/).
+Brief introduction is also available at http://rpubs.com/stomioka/FAERS
 
 The data from FAERS are pulled from FAERS database using Elasticsearch-based API. The API can be used not only for FAERS but drug labels, recall data as well as devices and foods. 
 
