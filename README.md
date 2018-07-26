@@ -22,10 +22,21 @@ FAERS is a useful tool for FDA for activities such as looking for new safety con
 
 ## The app
 
-The web application, [FDA Adverse Event Reporting System Data Reviewer](https://stomioka.shinyapps.io/FAERS/), that I developed has limitation.
+The web application, [FDA Adverse Event Reporting System Data Reviewer](https://stomioka.shinyapps.io/FAERS/), uses elasticsearch based API using openFDA library.
 
-It only provides a fraction of data in the FAERS. The app can be further enhanced to provide more data and visualization.
-The API has 1000 records limit. Therefore, the app may not show all the records in the FAERS. When the number of records of the table is 1000, the table is mostlikely displaying the first 1000 records of the database search results.
+Here is the sample call
+```{r}
+example<-fda_query("/drug/event.json") %>%
+      fda_filter("patient.drug.openfda.generic_name","ibuprofen" ) %>%
+      fda_filter("patient.drug.drugcharacterization", "1") %>% #1=Suspect, (the drug was considered by the reporter to have interacted with the suspect drug)
+      fda_count("patient.patientsex") %>%
+      fda_limit(1000) %>%
+      fda_exec()
+print(example)
+```
+Above shows `r example[1,2] ` female subjects, and  `r example[2,2] ` male subjects, reported adverse event to FAERS.
+
+The API has 1000 records limit. Therefore, the app may not show all the records in the FAERS. When the number of records of the table is 1000, the table is mostlikely displaying the first 1000 records of the database search results.The app can be further enhanced to provide more data and visualization.
 
 ## Future work
 
